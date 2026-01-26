@@ -1,9 +1,20 @@
-const AddTask = ({ todos, setTodos }) => {
+import { useEffect, useState } from "react";
+
+const AddTodo = ({ setTodos, editingTodo, setEditingTodo }) => {
   // State for the task input field
+  const [todo, setTodo] = useState("");
 
   // State for the date/time input field
+  const [todoDate, setTodoDate] = useState("");
 
-  // State to toggle the form visibility
+  // update initial states for form
+  useEffect(() => {
+     console.log(editingTodo);
+    if (editingTodo) {
+      setTodo(editingTodo.text);
+      setTodoDate(editingTodo.day);
+    }
+  }, [editingTodo]);
 
   /**
    * Handle form submission
@@ -13,35 +24,77 @@ const AddTask = ({ todos, setTodos }) => {
    * - Clears the input fields
    */
   const handleSubmit = (e) => {
+    e.preventDefault();
 
     // Validation: Check if task text is not empty
-
+    if (!todo.trim()) {
+      alert("Please enter a todo!");
+      return;
+    }
     // Create new task object with unique ID using Date.now()
+    const newTodo = {
+      id: Date.now(),
+      text: todo,
+      day: todoDate,
+      isDone: false,
+    };
 
     // Add new task to the beginning of the array using spread operator
+    setTodos((todos) => [newTodo, ...todos]);
 
     // Clear input fields after submission
+    setTodo("");
+    setTodoDate("");
+  };
 
-  }
+  const handleCancel = () => {
+    setEditingTodo(null)
+    setTodo("");
+    setTodoDate("");
+  };
 
   return (
-    <div className="task-form">
-      <form id="form-todo" name="form-todo" action="" className="form-control">
-        <div>
-          <label htmlFor="text-todo">Todo Description</label>
-          <input type="text" id="text-todo" name="textTodo" placeholder="What do you need to do?"/>
-
+    <div className="add-task-container" style={{background: editingTodo ? '#9eceff' : '#f8f9fa'}}>
+      <form onSubmit={handleSubmit}>
+      
+      {editingTodo && (
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
+          <button type="button" onClick={handleCancel}>
+            ❌
+          </button>
+        </div>
+      )}
+        <div className="form-control">
+          <label htmlFor="todo">Todo Description</label>
+          <input
+            type="text"
+            id="todo"
+            name="todo"
+            placeholder="What do you need to do?"
+            value={todo}
+            onChange={(e) => setTodo(e.target.value)}
+          />
         </div>
 
-        <div>
-          <label htmlFor="date-todo">Due Date & Time</label>
-          <input type="date" id="date-todo" name="dateTodo"/>
+        <div className="form-control">
+          <label htmlFor="date">Due Date & Time</label>
+          <input
+            type="datetime-local"
+            id="date"
+            name="date"
+            value={todoDate}
+            onChange={(e) => setTodoDate(e.target.value)}
+          />
         </div>
 
-        <button className="btn btn-submit">➕ Add Task</button>
+        <button type="submit" className="btn btn-submit">
+          ➕ Submit
+        </button>
+        
+        
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AddTask
+export default AddTodo;

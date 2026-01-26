@@ -1,4 +1,4 @@
-const Data = [
+export const todos = [
   {
     id: 1,
     text: "Study React Pre-Class Notes",
@@ -36,7 +36,5 @@ const Data = [
     isDone: false,
   },
 
-
-  
 ];
-export default Data;
+
