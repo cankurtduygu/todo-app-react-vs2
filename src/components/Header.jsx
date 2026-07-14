@@ -1,6 +1,4 @@
-import React from "react";
-
-export default function Header({ setIsFormVisible, isFormVisible}) {
+export default function Header({ setIsFormVisible, isFormVisible }) {
   return (
     <div className="add-task-container">
       <header className="header">

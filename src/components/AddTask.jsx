@@ -1,69 +1,76 @@
 import { useEffect, useState } from "react";
 
-const AddTodo = ({ setTodos, editingTodo, setEditingTodo }) => {
-  // State for the task input field
-  const [todo, setTodo] = useState("");
+const formatDateForInput = (day) => {
+  if (!day) return "";
+  if (day.includes("T")) return day.slice(0, 16);
+  return `${day}T00:00`;
+};
 
-  // State for the date/time input field
+const AddTask = ({ setTodos, editingTodo, setEditingTodo }) => {
+  const [todo, setTodo] = useState("");
   const [todoDate, setTodoDate] = useState("");
 
-  // update initial states for form
   useEffect(() => {
-     console.log(editingTodo);
     if (editingTodo) {
       setTodo(editingTodo.text);
-      setTodoDate(editingTodo.day);
+      setTodoDate(formatDateForInput(editingTodo.day));
     }
   }, [editingTodo]);
 
-  /**
-   * Handle form submission
-   * - Prevents default form behavior (page refresh)
-   * - Creates a new task object with unique ID
-   * - Adds new task to the beginning of the array
-   * - Clears the input fields
-   */
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation: Check if task text is not empty
     if (!todo.trim()) {
       alert("Please enter a todo!");
       return;
     }
-    // Create new task object with unique ID using Date.now()
-    const newTodo = {
-      id: Date.now(),
-      text: todo,
-      day: todoDate,
-      isDone: false,
-    };
 
-    // Add new task to the beginning of the array using spread operator
-    setTodos((todos) => [newTodo, ...todos]);
+    if (editingTodo) {
+      setTodos((todos) =>
+        todos.map((t) =>
+          t.id === editingTodo.id ? { ...t, text: todo, day: todoDate } : t,
+        ),
+      );
+      setEditingTodo(null);
+    } else {
+      const newTodo = {
+        id: Date.now(),
+        text: todo,
+        day: todoDate,
+        isDone: false,
+      };
+      setTodos((todos) => [newTodo, ...todos]);
+    }
 
-    // Clear input fields after submission
     setTodo("");
     setTodoDate("");
   };
 
   const handleCancel = () => {
-    setEditingTodo(null)
+    setEditingTodo(null);
     setTodo("");
     setTodoDate("");
   };
 
   return (
-    <div className="add-task-container" style={{background: editingTodo ? '#9eceff' : '#f8f9fa'}}>
+    <div
+      className="add-task-container"
+      style={{ background: editingTodo ? "#9eceff" : "#f8f9fa" }}
+    >
       <form onSubmit={handleSubmit}>
-      
-      {editingTodo && (
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
-          <button type="button" onClick={handleCancel}>
-            ❌
-          </button>
-        </div>
-      )}
+        {editingTodo && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginRight: "20px",
+            }}
+          >
+            <button type="button" onClick={handleCancel}>
+              ❌
+            </button>
+          </div>
+        )}
         <div className="form-control">
           <label htmlFor="todo">Todo Description</label>
           <input
@@ -88,13 +95,11 @@ const AddTodo = ({ setTodos, editingTodo, setEditingTodo }) => {
         </div>
 
         <button type="submit" className="btn btn-submit">
-          ➕ Submit
+          {editingTodo ? "💾 Update" : "➕ Submit"}
         </button>
-        
-        
       </form>
     </div>
   );
 };
 
-export default AddTodo;
+export default AddTask;

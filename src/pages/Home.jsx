@@ -13,21 +13,21 @@ import { todos as initialTodos } from "../helper/Data";
 
 const Home = () => {
   const [isFormVisible, setIsFormVisible] = useState(true);
-
   const [editingTodo, setEditingTodo] = useState(null);
 
-  // State to manage the list of todos
   const [todos, setTodos] = useState(() => {
     const savedTodos = localStorage.getItem("todos");
     return savedTodos ? JSON.parse(savedTodos) : initialTodos;
   });
 
   useEffect(() => {
-    // console.log('merhaba bir bir useEffect hookdan gelir');
-
-    // update localStorage when new todo is added
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]); // if array is empty, this function works once at first render
+  }, [todos]);
+
+  const handleEditTodo = (todo) => {
+    setEditingTodo(todo);
+    setIsFormVisible(true);
+  };
 
   return (
     <div className="home-container">
@@ -39,7 +39,6 @@ const Home = () => {
       {isFormVisible && (
         <AddTask
           setTodos={setTodos}
-          todos={todos}
           editingTodo={editingTodo}
           setEditingTodo={setEditingTodo}
         />
@@ -48,7 +47,7 @@ const Home = () => {
       <TodoList
         todos={todos}
         setTodos={setTodos}
-        setEditingTodo={setEditingTodo}
+        onEditTodo={handleEditTodo}
       />
     </div>
   );

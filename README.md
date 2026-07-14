@@ -1,70 +1,199 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ✅ My Todo App
 
-## Available Scripts
+### A simple and modern task management application
 
-In the project directory, you can run:
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Create React App](https://img.shields.io/badge/Create_React_App-5.x-09D3AC?style=for-the-badge&logo=create-react-app&logoColor=white)](https://create-react-app.dev/)
+[![React Icons](https://img.shields.io/badge/React_Icons-5.x-E91E63?style=for-the-badge)](https://react-icons.github.io/react-icons/)
 
-### `yarn start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ✨ Overview
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**My Todo App** is a clean and responsive todo application that helps users manage daily tasks with add, edit, delete, and completion features. Tasks can include optional due dates, and all data is automatically saved to `localStorage` so your list persists across page refreshes.
 
-### `yarn test`
+Built with React 18 and Create React App, the project focuses on core React concepts — component composition, lifting state up, controlled forms, and side effects with `useEffect`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `yarn build`
+## 🚀 Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Feature | Description |
+|---|---|
+| ➕ **Add Task** | Create new todos with description and optional due date & time |
+| ✏️ **Edit Task** | Update existing todos; form auto-opens in edit mode |
+| 🗑️ **Delete Task** | Remove todos from the list with a single click |
+| ✅ **Toggle Complete** | Mark todos as done/undone by double-clicking |
+| 👁️ **Form Toggle** | Show or hide the add task form from the header |
+| 💾 **Local Persistence** | Todos are saved to `localStorage` on every change |
+| 📱 **Responsive** | Mobile-friendly layout with adaptive styling |
+| 🎨 **Modern UI** | Gradient background, card layout, and smooth animations |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🛠️ Tech Stack
 
-### `yarn eject`
+### Core
+- **[React 18](https://react.dev/)** — UI library with hooks-based state management
+- **[Create React App](https://create-react-app.dev/)** — Zero-config build tooling
+- **[React DOM](https://react.dev/)** — Rendering with `createRoot` API
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### UI & Styling
+- **Custom CSS** — Gradient themes, animations, and responsive breakpoints
+- **[Google Fonts (Poppins)](https://fonts.google.com/specimen/Poppins)** — Modern typography
+- **[react-icons](https://react-icons.github.io/react-icons/)** — Edit and delete icons (`TiEdit`, `TiDelete`)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Data
+- **localStorage** — Client-side persistence for todo list
+- **Initial seed data** — Sample todos loaded on first visit
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📁 Project Structure
 
-## Learn More
+```
+src/
+├── components/
+│   ├── AddTask.jsx       # Form to add and edit todos
+│   ├── Header.jsx        # App title and form visibility toggle
+│   └── TodoList.jsx      # Todo list with edit, delete, and complete actions
+│
+├── helper/
+│   └── Data.jsx          # Initial sample todo data
+│
+├── pages/
+│   └── Home.jsx          # Main page — state management and component coordination
+│
+├── App.js                # Root component
+├── App.css               # Global styles and component styling
+└── index.js              # React DOM entry point
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🏗️ State Architecture
 
-### Code Splitting
+```
+Home (pages/Home.jsx)
+├── isFormVisible         # Controls add/edit form visibility
+├── editingTodo           # Currently selected todo for editing (null when adding)
+└── todos                 # Array of todo objects
+    └── { id, text, day, isDone }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+localStorage
+└── "todos" key           # JSON-serialized todo array (synced via useEffect)
+```
 
-### Analyzing the Bundle Size
+| State | Managed In | Description |
+|---|---|---|
+| `todos` | `Home.jsx` | Main todo list; initialized from `localStorage` or seed data |
+| `editingTodo` | `Home.jsx` | Tracks which todo is being edited |
+| `isFormVisible` | `Home.jsx` | Toggles add task form visibility |
+| `todo`, `todoDate` | `AddTask.jsx` | Local form input state |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## ⚙️ Getting Started
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Prerequisites
 
-### Advanced Configuration
+- [Node.js](https://nodejs.org/) ≥ 14
+- [Yarn](https://yarnpkg.com/) (recommended) — or npm
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 1. Clone the repository
 
-### Deployment
+```bash
+git clone https://github.com/cankurtduygu/todo-app-react-vs2.git
+cd todo-app-react-vs2
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 2. Install dependencies
 
-### `yarn build` fails to minify
+```bash
+yarn install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 3. Start the development server
+
+```bash
+yarn start
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 4. Build for production
+
+```bash
+yarn build
+```
+
+The optimized build will be output to the `build/` folder.
+
+### 5. Run tests
+
+```bash
+yarn test
+```
+
+---
+
+## 🧩 How It Works
+
+### Adding a Todo
+
+1. Fill in the task description (required) and optional due date.
+2. Click **Submit** — a new todo is prepended to the list with `isDone: false`.
+3. `useEffect` in `Home.jsx` saves the updated list to `localStorage`.
+
+### Editing a Todo
+
+1. Click the edit icon on any todo.
+2. The form opens with pre-filled values and switches to **Update** mode.
+3. Submit updates the matching todo by `id`; cancel clears edit state.
+
+### Completing a Todo
+
+Double-click any todo item to toggle its `isDone` status. Completed todos get a strikethrough style and muted background.
+
+### Deleting a Todo
+
+Click the delete icon. The todo is removed via `filter()` and the list is persisted.
+
+---
+
+## 🌐 Deployment
+
+This app is a static React SPA and can be deployed to **Netlify**, **Vercel**, or **GitHub Pages**:
+
+```bash
+yarn build
+```
+
+Deploy the contents of the `build/` folder to your hosting provider of choice.
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feat/your-feature`
+3. Commit your changes: `git commit -m "feat: add your feature"`
+4. Push to your branch: `git push origin feat/your-feature`
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is open source and available for educational purposes.
+
+---
+
+<p align="center">
+  Made with ❤️ and React
+  <br />
+  ⭐ <strong>Star this repo if you find it useful!</strong>
+</p>

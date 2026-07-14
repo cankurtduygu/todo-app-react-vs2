@@ -229,6 +229,21 @@ body {
   margin-top: 0.5rem;
 }
 
+/* Edit icon */
+.edit-icon {
+  color: #3498db;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.edit-icon:hover {
+  color: #2980b9;
+  transform: scale(1.2);
+}
+
 /* Delete icon */
 .delete-icon {
   color: #e74c3c;
@@ -275,6 +290,7 @@ body {
     font-size: 1rem;
   }
 
+  .edit-icon,
   .delete-icon {
     font-size: 1.5rem;
   }
